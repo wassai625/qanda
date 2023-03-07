@@ -2,7 +2,7 @@ class QuestionsController < ApplicationController
     # 質問一覧表示
     def index
         @questions = Question.all
-        
+
     end
     # 質問詳細ページ表示
     def show
@@ -16,8 +16,11 @@ class QuestionsController < ApplicationController
     # 質問の登録
     def create
         @question = Question.new(question_params)
-        @question.save
-        redirect_to @question
+        if @question.save
+            redirect_to @question
+        else
+            render 'new', status: :unprocessable_entity
+        end
     end
     # 質問の編集
     def edit
